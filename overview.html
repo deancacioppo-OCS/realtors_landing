@@ -137,6 +137,51 @@
         </div>
     </section>
 
+    <!-- Testimonial Video Section -->
+    <section class="bg-white py-16">
+        <div class="container mx-auto max-w-5xl px-6 text-center">
+            <h2 class="text-3xl font-bold">Hear Directly from Agents who dominate their market</h2>
+            <p class="mt-4 text-lg text-gray-600">Grant Clayton shares how dominating local search transformed inbound deal flow.</p>
+            <!-- Video (lazy swap: load image first, inject video on click) -->
+            <div id="testimonial-video" data-src="grant_clayton_1percentlists.mp4" class="max-w-3xl mx-auto mt-8 rounded-lg shadow-2xl overflow-hidden aspect-video relative group cursor-pointer">
+                <img src="https://placehold.co/1280x720/111827/ffffff?text=Grant+Clayton+%E2%80%94+1+Percent+Lists" alt="Grant Clayton testimonial video" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+                    <div class="bg-white/80 group-hover:bg-white shadow rounded-full p-4 transition-colors" aria-hidden="true">
+                        <svg class="w-10 h-10 text-blue-600" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"></path></svg>
+                    </div>
+                    <span class="sr-only">Play video</span>
+                </div>
+            </div>
+            <script>
+            (function() {
+                var container = document.getElementById('testimonial-video');
+                if (!container) return;
+                function loadVideo() {
+                    var src = container.getAttribute('data-src');
+                    if (!src) return;
+                    var video = document.createElement('video');
+                    video.className = 'w-full h-full object-cover';
+                    video.controls = true;
+                    video.playsInline = true;
+                    video.preload = 'auto';
+                    var source = document.createElement('source');
+                    source.src = src;
+                    source.type = 'video/mp4';
+                    video.appendChild(source);
+                    var parent = container.parentNode;
+                    if (parent) parent.replaceChild(video, container);
+                    try { video.play(); } catch (e) { /* ignore if browser defers */ }
+                }
+                container.addEventListener('click', loadVideo, { once: true });
+                container.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); loadVideo(); } }, { once: true });
+                container.setAttribute('tabindex', '0');
+                container.setAttribute('role', 'button');
+                container.setAttribute('aria-label', 'Play testimonial video: Grant Clayton — 1 Percent Lists');
+            })();
+            </script>
+        </div>
+    </section>
+
     <!-- Problem / Solution Section -->
     <section class="pt-12 pb-20 bg-white">
         <div class="container mx-auto max-w-5xl px-6">
