@@ -1,0 +1,18 @@
+[build]
+  publish = "."
+
+[[redirects]]
+  from = "/"
+  to = "/overview.html"
+  status = 200
+
+[[redirects]]
+  from = "/your-plan"
+  to = "/your-plan.html"
+  status = 200
+
+[[redirects]]
+  from = "/book"
+  to = "/book.html"
+  status = 200
+
