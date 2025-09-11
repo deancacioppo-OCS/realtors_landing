@@ -193,14 +193,28 @@
                     video.className = 'w-full h-full object-cover';
                     video.controls = true;
                     video.playsInline = true;
-                    video.preload = 'auto';
+                    video.preload = 'metadata';
+                    // Use current placeholder image as poster
+                    try {
+                        var img = container.querySelector('img');
+                        if (img && img.src) video.setAttribute('poster', img.src);
+                    } catch (e) { /* noop */ }
                     var source = document.createElement('source');
                     source.src = src;
                     source.type = 'video/mp4';
                     video.appendChild(source);
                     var parent = container.parentNode;
                     if (parent) parent.replaceChild(video, container);
-                    try { video.play(); } catch (e) { /* ignore if browser defers */ }
+                    var attempted = false;
+                    function tryPlay() {
+                        if (attempted) return;
+                        attempted = true;
+                        var p = video.play();
+                        if (p && typeof p.catch === 'function') { p.catch(function(){ /* user will press play */ }); }
+                    }
+                    video.addEventListener('canplay', tryPlay, { once: true });
+                    // Click-to-play fallback on the video element itself
+                    video.addEventListener('click', function(){ if (video.paused) { try { video.play(); } catch (e) {} } });
                 }
                 container.addEventListener('click', loadVideo, { once: true });
                 container.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); loadVideo(); } }, { once: true });
