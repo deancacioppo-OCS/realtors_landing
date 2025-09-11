@@ -86,15 +86,19 @@
                 var src = container.getAttribute('data-src');
                 if (!src) return;
                 var video = document.createElement('video');
-                video.setAttribute('class', 'w-full h-full object-cover');
-                video.setAttribute('controls', '');
-                video.setAttribute('playsinline', '');
-                video.setAttribute('autoplay', '');
+                video.className = 'w-full h-full object-cover';
+                video.controls = true;
+                video.playsInline = true;
+                video.preload = 'auto';
                 var source = document.createElement('source');
                 source.src = src;
                 source.type = 'video/mp4';
                 video.appendChild(source);
-                container.replaceWith(video);
+                // Replace container with the actual video element
+                var parent = container.parentNode;
+                if (parent) parent.replaceChild(video, container);
+                // Attempt to play immediately as part of the user gesture
+                try { video.play(); } catch (e) { /* ignore if browser defers */ }
             }
             container.addEventListener('click', loadVideo, { once: true });
             container.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); loadVideo(); } }, { once: true });
